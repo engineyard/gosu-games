@@ -20,6 +20,10 @@ class BitcoinPrice
         @price = price 
         @time = time 
     end 
+
+    def to_display
+        "#{price}   #{time}   #{center_x}, #{center_y}" 
+    end
 end 
 
 def time_display(t = Time.now)
@@ -56,9 +60,9 @@ class Game < Gosu::Window
         end
 
         first_price = @prices[0].price
-        five_percent = first_price * 0.05
-        @top_price = first_price + five_percent
-        @bottom_price = first_price - five_percent
+        two_point_five_percent = first_price * 0.025
+        @top_price = first_price + two_point_five_percent
+        @bottom_price = first_price - two_point_five_percent
         @price_range = @top_price - @bottom_price
 
         @y_axis_labels = []
@@ -77,7 +81,7 @@ class Game < Gosu::Window
         @x_axis_labels << (@start_time + VISIBLE_TIME_SECONDS).strftime(MM_SS_FORMAT)
 
         running_x = 205
-        @prices_to_draw = @prices.last(10)
+        @prices_to_draw = @prices.last(X_INTERVALS_TOTAL)
         @prices_to_draw.each do |price|
             price.center_x = running_x
             running_x = running_x + X_INTERVAL_PIXELS
@@ -192,7 +196,6 @@ class Game < Gosu::Window
                     nine_percent_of_range = @price_range * 0.09
                     @prediction.predition_bottom = click_price - nine_percent_of_range
                     @prediction.predition_top = click_price + nine_percent_of_range
-                    puts "Prediction range: #{@prediction.predition_bottom} - #{@prediction.predition_top}"
                 else 
                     @prediction = nil
                     @result = nil
