@@ -5,6 +5,7 @@ AVERAGE_RESPONSE_TIME = 284.to_f     # Per humanbenchmark.com, in milliseconds
 class Game < Gosu::Window
     def initialize
         super(800, 600, false)
+        self.caption = "Reaction Time Game"
         @font = Gosu::Font.new(32)
         @city_background = Gosu::Image.new("./images/Background.png")
         @red_light = Gosu::Image.new("./images/RedLight.png")
